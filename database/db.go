@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"github.com/joho/godotenv"
+	"github.com/wirapratamaz/H8FGA-MyGRAM/models"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
