@@ -2,6 +2,7 @@ package models
 
 import (
 	"github.com/asaskevich/govalidator"
+	"github.com/wirapratamaz/H8FGA-MyGRAM/app/auth"
 	"gorm.io/gorm"
 )
 
