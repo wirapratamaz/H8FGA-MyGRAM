@@ -29,7 +29,7 @@ func ConnectDB() *gorm.DB {
 		log.Fatal(err)
 	}
 
-	if err := db.AutoMigrate(&models.User{}); err != nil {
+	if err := db.AutoMigrate(models.User{}, models.Social{}, models.Photo{}, models.Comment{}); err != nil {
 		log.Fatal(err.Error())
 	}
 
