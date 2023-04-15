@@ -63,10 +63,8 @@ func (controller *CommentController) CreateComment(ctx *gin.Context) {
 }
 
 func (controller *CommentController) FindAllComment(ctx *gin.Context) {
-	photoId := ctx.Query("photo_id")
 	var comments []models.Comment
-
-	err := controller.db.Where("photo_id = ?", photoId).Find(&comments).Error
+	err := controller.db.Find(&comments).Error
 	if err != nil {
 		if err.Error() == gorm.ErrRecordNotFound.Error() {
 			response.NotFoundResponse(ctx, "data not found")
