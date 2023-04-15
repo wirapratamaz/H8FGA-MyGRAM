@@ -22,6 +22,17 @@ func NewUserController(db *gorm.DB) *UserController {
 	}
 }
 
+// @Summary Create a new user
+// @Description Create a new user with the given details
+// @Tags users
+// @Accept json
+// @Produce json
+// @Param user body User true "User object to create"
+// @Success 201 {object} UserCreateResponse
+// @Failure 400 {object} ErrorResponse
+// @Failure 404 {object} ErrorResponse
+// @Failure 500 {object} ErrorResponse
+// @Router /users [post]
 func (controller *UserController) CreateUser(ctx *gin.Context) {
 	user := models.User{}
 
@@ -55,6 +66,16 @@ func (controller *UserController) CreateUser(ctx *gin.Context) {
 	})
 }
 
+// @Summary User login
+// @Description Authenticate the user and generate a token
+// @Tags users
+// @Accept json
+// @Produce json
+// @Param user body User true "User object to authenticate"
+// @Success 200 {object} UserLoginResponse
+// @Failure 400 {object} ErrorResponse
+// @Failure 401 {object} ErrorResponse
+// @Router /users/login [post]
 func (controller *UserController) UserLogin(ctx *gin.Context) {
 	user := models.User{}
 	err := ctx.ShouldBindJSON(&user)
@@ -88,6 +109,21 @@ func (controller *UserController) UserLogin(ctx *gin.Context) {
 	})
 }
 
+// UpdateUser updates an existing user's information
+// @Summary Update an existing user
+// @Description Update an existing user's information
+// @Tags Users
+// @Accept json
+// @Produce json
+// @Security ApiKeyAuth
+// @Param Authorization header string true "Bearer <access_token>"
+// @Param user body UserUpdateRequest true "User object that needs to be updated"
+// @Success 200 {object} UserUpdateResponse
+// @Failure 400 {object} ErrorResponse
+// @Failure 401 {string} string "Unauthorized"
+// @Failure 404 {object} ErrorResponse
+// @Failure 500 {object} ErrorResponse
+// @Router /users/{id} [put]
 func (controller *UserController) UpdateUser(ctx *gin.Context) {
 	userId, _ := ctx.Get("id")
 	userReq := repository.UserUpdateRequest{}
@@ -135,6 +171,16 @@ func (controller *UserController) UpdateUser(ctx *gin.Context) {
 	})
 }
 
+// DeleteUser godoc
+// @Summary Delete user account
+// @Description Deletes the user account associated with the provided authentication token
+// @Tags users
+// @Produce json
+// @Success 200 {object} gin.H
+// @Failure 400 {object} gin.H
+// @Failure 404 {object} gin.H
+// @Failure 500 {object} gin.H
+// @Router /users [delete]
 func (controller *UserController) DeleteUser(ctx *gin.Context) {
 	userId, _ := ctx.Get("id")
 	var user models.User

@@ -2,6 +2,8 @@ package routers
 
 import (
 	"github.com/gin-gonic/gin"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 	"github.com/wirapratamaz/H8FGA-MyGRAM/app/middleware"
 	"github.com/wirapratamaz/H8FGA-MyGRAM/controller"
 	"github.com/wirapratamaz/H8FGA-MyGRAM/database"
@@ -47,5 +49,8 @@ func StartApp() *gin.Engine {
 		commentGroup.PUT("/:commentId", middleware.Auth(), comment.UpdateComment)
 		commentGroup.DELETE("/:commentId", middleware.Auth(), comment.DeleteComment)
 	}
+
+	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+
 	return router
 }

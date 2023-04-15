@@ -21,6 +21,20 @@ func NewPhotoController(db *gorm.DB) *PhotoController {
 	}
 }
 
+// CreatePhoto godoc
+// @Summary Create a new photo data for authenticated user
+// @Description Create a new photo data for authenticated user
+// @Tags Photos
+// @Accept json
+// @Produce json
+// @Param photo body repository.PhotoRequest true "Photo data"
+// @Security ApiKeyAuth
+// @Success 201 {object} repository.PhotoCreateResponse
+// @Failure 400 {object} response.BadRequest
+// @Failure 401 {object} response.Unauthorized
+// @Failure 500 {object} response.InternalServerError
+// @Router /photos [post]
+
 func (controller *PhotoController) CreatePhoto(ctx *gin.Context) {
 	userId, _ := ctx.Get("id")
 	photoRequest := repository.PhotoRequest{}
@@ -64,6 +78,17 @@ func (controller *PhotoController) CreatePhoto(ctx *gin.Context) {
 	})
 }
 
+// FindAllPhoto godoc
+// @Summary Find all photos of the authenticated user
+// @Description Get all photos of the authenticated user
+// @Tags Photo
+// @Accept json
+// @Produce json
+// @Security ApiKeyAuth
+// @Success 200 {array} models.Photo
+// @Failure 401 {object} response.Unauthorized
+// @Failure 500 {object} response.InternalServerError
+// @Router /photo [get]
 func (controller *PhotoController) FindAllPhoto(ctx *gin.Context) {
 	userId, _ := ctx.Get("id")
 	var photos []models.Photo
@@ -77,6 +102,21 @@ func (controller *PhotoController) FindAllPhoto(ctx *gin.Context) {
 	response.WriteJsonResponse(ctx, http.StatusOK, photos)
 }
 
+// UpdatePhoto godoc
+// @Summary Update photo data of the authenticated user
+// @Description Update photo data of the authenticated user
+// @Tags Photo
+// @Accept json
+// @Produce json
+// @Param photoId path string true "Photo ID"
+// @Param photoRequest body repository.PhotoRequest true "Photo Data"
+// @Security ApiKeyAuth
+// @Success 200 {object} repository.PhotoCreateResponse
+// @Failure 400 {object} response.BadRequest
+// @Failure 401 {object} response.Unauthorized
+// @Failure 404 {object} response.NotFound
+// @Failure 500 {object} response.InternalServerError
+// @Router /photo/{photoId} [put]
 func (controller *PhotoController) UpdatePhoto(ctx *gin.Context) {
 	userId, _ := ctx.Get("id")
 	photoId := ctx.Param("photoId")
@@ -133,6 +173,19 @@ func (controller *PhotoController) UpdatePhoto(ctx *gin.Context) {
 	})
 }
 
+// DeletePhoto godoc
+// @Summary Delete photo data of the authenticated user
+// @Description Delete photo data of the authenticated user
+// @Tags Photos
+// @Accept json
+// @Produce json
+// @Param photoId path string true "Photo ID"
+// @Security ApiKeyAuth
+// @Success 200 {object} gin.H
+// @Failure 401 {object} response.Unauthorized
+// @Failure 404 {object} response.NotFound
+// @Failure 500 {object} response.InternalServerError
+// @Router /photos/{photoId} [delete]
 func (controller *PhotoController) DeletePhoto(ctx *gin.Context) {
 	userId, _ := ctx.Get("id")
 	photoId := ctx.Param("photoId")

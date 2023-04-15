@@ -21,6 +21,21 @@ func NewCommentController(db *gorm.DB) *CommentController {
 	}
 }
 
+// CreateComment godoc
+// @Summary Create a new comment for a photo
+// @Description Create a new comment for a photo
+// @Tags Comments
+// @Accept json
+// @Produce json
+// @Param Authorization header string true "Bearer <token>"
+// @Param comment body repository.CommentRequest true "Comment data"
+// @Security ApiKeyAuth
+// @Success 201 {object} repository.CommentCreateResponse
+// @Failure 400 {object} response.BadRequest
+// @Failure 401 {object} response.Unauthorized
+// @Failure 404 {object} response.NotFound
+// @Failure 500 {object} response.InternalServerError
+// @Router /comments [post]
 func (controller *CommentController) CreateComment(ctx *gin.Context) {
 	userId, _ := ctx.Get("id")
 	commentRequest := repository.CommentRequest{}
@@ -62,6 +77,17 @@ func (controller *CommentController) CreateComment(ctx *gin.Context) {
 	})
 }
 
+// FindAllComment godoc
+// @Summary Get all comments
+// @Description Get all comments
+// @Tags Comment
+// @Accept json
+// @Produce json
+// @Security ApiKeyAuth
+// @Success 200 {array} repository.CommentCreateResponse
+// @Failure 404 {object} response.NotFound
+// @Failure 500 {object} response.InternalServerError
+// @Router /comments [get]
 func (controller *CommentController) FindAllComment(ctx *gin.Context) {
 	var comments []models.Comment
 	err := controller.db.Find(&comments).Error
@@ -88,6 +114,21 @@ func (controller *CommentController) FindAllComment(ctx *gin.Context) {
 	response.WriteJsonResponse(ctx, http.StatusOK, commentList)
 }
 
+// UpdateComment godoc
+// @Summary Update comment by comment ID
+// @Description Update comment by comment ID
+// @Tags Comment
+// @Accept json
+// @Produce json
+// @Param commentId path string true "Comment ID"
+// @Param comment body repository.CommentRequest true "Comment data"
+// @Security ApiKeyAuth
+// @Success 200 {object} repository.CommentCreateResponse
+// @Failure 400 {object} response.BadRequest
+// @Failure 401 {object} response.Unauthorized
+// @Failure 404 {object} response.NotFound
+// @Failure 500 {object} response.InternalServerError
+// @Router /comment/{commentId} [put]
 func (controller *CommentController) UpdateComment(ctx *gin.Context) {
 	userId, _ := ctx.Get("id")
 	commentId := ctx.Param("commentId")
@@ -146,6 +187,19 @@ func (controller *CommentController) UpdateComment(ctx *gin.Context) {
 	})
 }
 
+// DeleteComment godoc
+// @Summary Delete a comment
+// @Description Delete a comment by the authenticated user who created it
+// @Tags Comment
+// @Accept json
+// @Produce json
+// @Param commentId path string true "Comment ID"
+// @Security ApiKeyAuth
+// @Success 200 {object} gin.H
+// @Failure 401 {object} response.Unauthorized
+// @Failure 404 {object} response.NotFound
+// @Failure 500 {object} response.InternalServerError
+// @Router /comments/{commentId} [delete]
 func (controller *CommentController) DeleteComment(ctx *gin.Context) {
 	userId, _ := ctx.Get("id")
 	commentId := ctx.Param("commentId")

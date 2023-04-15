@@ -21,6 +21,17 @@ func NewSocialController(db *gorm.DB) *SocialController {
 	}
 }
 
+// CreateSocial godoc
+// @Summary Create a social media account for a user
+// @Description Create a new social media account for the authenticated user. Returns the created social media account.
+// @Tags Social
+// @Produce json
+// @Security ApiKeyAuth
+// @Success 200 {array} repository.SocialCreateResponse
+// @Failure 400 {object} response.BadRequest
+// @Failure 401 {object} response.Unauthorized
+// @Failure 500 {object} response.InternalServerError
+// @Router /social [post]
 func (controller *SocialController) CreateSocial(ctx *gin.Context) {
 	userId, _ := ctx.Get("id")
 	socialRequest := repository.SocialRequest{}
@@ -62,6 +73,17 @@ func (controller *SocialController) CreateSocial(ctx *gin.Context) {
 	})
 }
 
+// FindAllSocial godoc
+// @Summary Find all social media of the authenticated user
+// @Description Get all social media data of the authenticated user
+// @Tags Social
+// @Produce json
+// @Security ApiKeyAuth
+// @Success 200 {array} repository.SocialCreateResponse
+// @Failure 400 {object} response.BadRequest
+// @Failure 401 {object} response.Unauthorized
+// @Failure 500 {object} response.InternalServerError
+// @Router /social [get]
 func (controller *SocialController) FindAllSocial(ctx *gin.Context) {
 	userId, _ := ctx.Get("id")
 	var socials []models.Social
@@ -86,6 +108,21 @@ func (controller *SocialController) FindAllSocial(ctx *gin.Context) {
 	response.WriteJsonResponse(ctx, http.StatusOK, socialResponses)
 }
 
+// UpdateSocial godoc
+// @Summary Update social media data of the authenticated user
+// @Description Update social media data of the authenticated user
+// @Tags Social
+// @Accept json
+// @Produce json
+// @Param socialMediaId path string true "Social Media ID"
+// @Param socialMedia body repository.SocialRequest true "Social Media Data"
+// @Security ApiKeyAuth
+// @Success 200 {object} repository.SocialCreateResponse
+// @Failure 400 {object} response.BadRequest
+// @Failure 401 {object} response.Unauthorized
+// @Failure 404 {object} response.NotFound
+// @Failure 500 {object} response.InternalServerError
+// @Router /social/{socialMediaId} [put]
 func (controller *SocialController) UpdateSocial(ctx *gin.Context) {
 	userId, _ := ctx.Get("id")
 	socialMediaId := ctx.Param("socialMediaId")
@@ -141,6 +178,19 @@ func (controller *SocialController) UpdateSocial(ctx *gin.Context) {
 	})
 }
 
+// DeleteSocial godoc
+// @Summary Delete social media data of the authenticated user
+// @Description Delete social media data of the authenticated user
+// @Tags Social
+// @Accept json
+// @Produce json
+// @Param socialMediaId path string true "Social Media ID"
+// @Security ApiKeyAuth
+// @Success 200 {object} gin.H
+// @Failure 401 {object} response.Unauthorized
+// @Failure 404 {object} response.NotFound
+// @Failure 500 {object} response.InternalServerError
+// @Router /social/{socialMediaId} [delete]
 func (controller *SocialController) DeleteSocial(ctx *gin.Context) {
 	userId, _ := ctx.Get("id")
 	socialMediaId := ctx.Param("socialMediaId")
