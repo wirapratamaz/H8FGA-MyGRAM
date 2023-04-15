@@ -30,3 +30,10 @@ func NotFoundResponse(ctx *gin.Context, payload interface{}) {
 func WriteJsonResponse(ctx *gin.Context, status int, payload interface{}) {
 	ctx.JSON(status, payload)
 }
+
+func UnauthorizedResponse(ctx *gin.Context, payload interface{}) {
+	WriteJsonResponse(ctx, http.StatusUnauthorized, gin.H{
+		"error":   true,
+		"message": payload,
+	})
+}

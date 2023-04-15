@@ -28,9 +28,6 @@ func NewSocialController(db *gorm.DB) *SocialController {
 // @Produce json
 // @Security ApiKeyAuth
 // @Success 200 {array} repository.SocialCreateResponse
-// @Failure 400 {object} response.BadRequest
-// @Failure 401 {object} response.Unauthorized
-// @Failure 500 {object} response.InternalServerError
 // @Router /social [post]
 func (controller *SocialController) CreateSocial(ctx *gin.Context) {
 	userId, _ := ctx.Get("id")
@@ -80,9 +77,6 @@ func (controller *SocialController) CreateSocial(ctx *gin.Context) {
 // @Produce json
 // @Security ApiKeyAuth
 // @Success 200 {array} repository.SocialCreateResponse
-// @Failure 400 {object} response.BadRequest
-// @Failure 401 {object} response.Unauthorized
-// @Failure 500 {object} response.InternalServerError
 // @Router /social [get]
 func (controller *SocialController) FindAllSocial(ctx *gin.Context) {
 	userId, _ := ctx.Get("id")
@@ -118,10 +112,6 @@ func (controller *SocialController) FindAllSocial(ctx *gin.Context) {
 // @Param socialMedia body repository.SocialRequest true "Social Media Data"
 // @Security ApiKeyAuth
 // @Success 200 {object} repository.SocialCreateResponse
-// @Failure 400 {object} response.BadRequest
-// @Failure 401 {object} response.Unauthorized
-// @Failure 404 {object} response.NotFound
-// @Failure 500 {object} response.InternalServerError
 // @Router /social/{socialMediaId} [put]
 func (controller *SocialController) UpdateSocial(ctx *gin.Context) {
 	userId, _ := ctx.Get("id")
@@ -187,9 +177,6 @@ func (controller *SocialController) UpdateSocial(ctx *gin.Context) {
 // @Param socialMediaId path string true "Social Media ID"
 // @Security ApiKeyAuth
 // @Success 200 {object} gin.H
-// @Failure 401 {object} response.Unauthorized
-// @Failure 404 {object} response.NotFound
-// @Failure 500 {object} response.InternalServerError
 // @Router /social/{socialMediaId} [delete]
 func (controller *SocialController) DeleteSocial(ctx *gin.Context) {
 	userId, _ := ctx.Get("id")

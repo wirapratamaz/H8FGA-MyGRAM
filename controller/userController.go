@@ -29,9 +29,6 @@ func NewUserController(db *gorm.DB) *UserController {
 // @Produce json
 // @Param user body User true "User object to create"
 // @Success 201 {object} UserCreateResponse
-// @Failure 400 {object} ErrorResponse
-// @Failure 404 {object} ErrorResponse
-// @Failure 500 {object} ErrorResponse
 // @Router /users [post]
 func (controller *UserController) CreateUser(ctx *gin.Context) {
 	user := models.User{}
@@ -73,8 +70,6 @@ func (controller *UserController) CreateUser(ctx *gin.Context) {
 // @Produce json
 // @Param user body User true "User object to authenticate"
 // @Success 200 {object} UserLoginResponse
-// @Failure 400 {object} ErrorResponse
-// @Failure 401 {object} ErrorResponse
 // @Router /users/login [post]
 func (controller *UserController) UserLogin(ctx *gin.Context) {
 	user := models.User{}
@@ -119,10 +114,6 @@ func (controller *UserController) UserLogin(ctx *gin.Context) {
 // @Param Authorization header string true "Bearer <access_token>"
 // @Param user body UserUpdateRequest true "User object that needs to be updated"
 // @Success 200 {object} UserUpdateResponse
-// @Failure 400 {object} ErrorResponse
-// @Failure 401 {string} string "Unauthorized"
-// @Failure 404 {object} ErrorResponse
-// @Failure 500 {object} ErrorResponse
 // @Router /users/{id} [put]
 func (controller *UserController) UpdateUser(ctx *gin.Context) {
 	userId, _ := ctx.Get("id")
@@ -177,9 +168,6 @@ func (controller *UserController) UpdateUser(ctx *gin.Context) {
 // @Tags users
 // @Produce json
 // @Success 200 {object} gin.H
-// @Failure 400 {object} gin.H
-// @Failure 404 {object} gin.H
-// @Failure 500 {object} gin.H
 // @Router /users [delete]
 func (controller *UserController) DeleteUser(ctx *gin.Context) {
 	userId, _ := ctx.Get("id")

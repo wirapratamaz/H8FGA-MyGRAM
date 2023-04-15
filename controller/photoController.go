@@ -30,9 +30,6 @@ func NewPhotoController(db *gorm.DB) *PhotoController {
 // @Param photo body repository.PhotoRequest true "Photo data"
 // @Security ApiKeyAuth
 // @Success 201 {object} repository.PhotoCreateResponse
-// @Failure 400 {object} response.BadRequest
-// @Failure 401 {object} response.Unauthorized
-// @Failure 500 {object} response.InternalServerError
 // @Router /photos [post]
 
 func (controller *PhotoController) CreatePhoto(ctx *gin.Context) {
@@ -86,8 +83,6 @@ func (controller *PhotoController) CreatePhoto(ctx *gin.Context) {
 // @Produce json
 // @Security ApiKeyAuth
 // @Success 200 {array} models.Photo
-// @Failure 401 {object} response.Unauthorized
-// @Failure 500 {object} response.InternalServerError
 // @Router /photo [get]
 func (controller *PhotoController) FindAllPhoto(ctx *gin.Context) {
 	userId, _ := ctx.Get("id")
@@ -112,10 +107,6 @@ func (controller *PhotoController) FindAllPhoto(ctx *gin.Context) {
 // @Param photoRequest body repository.PhotoRequest true "Photo Data"
 // @Security ApiKeyAuth
 // @Success 200 {object} repository.PhotoCreateResponse
-// @Failure 400 {object} response.BadRequest
-// @Failure 401 {object} response.Unauthorized
-// @Failure 404 {object} response.NotFound
-// @Failure 500 {object} response.InternalServerError
 // @Router /photo/{photoId} [put]
 func (controller *PhotoController) UpdatePhoto(ctx *gin.Context) {
 	userId, _ := ctx.Get("id")
@@ -182,9 +173,6 @@ func (controller *PhotoController) UpdatePhoto(ctx *gin.Context) {
 // @Param photoId path string true "Photo ID"
 // @Security ApiKeyAuth
 // @Success 200 {object} gin.H
-// @Failure 401 {object} response.Unauthorized
-// @Failure 404 {object} response.NotFound
-// @Failure 500 {object} response.InternalServerError
 // @Router /photos/{photoId} [delete]
 func (controller *PhotoController) DeletePhoto(ctx *gin.Context) {
 	userId, _ := ctx.Get("id")

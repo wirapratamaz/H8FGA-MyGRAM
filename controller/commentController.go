@@ -31,10 +31,6 @@ func NewCommentController(db *gorm.DB) *CommentController {
 // @Param comment body repository.CommentRequest true "Comment data"
 // @Security ApiKeyAuth
 // @Success 201 {object} repository.CommentCreateResponse
-// @Failure 400 {object} response.BadRequest
-// @Failure 401 {object} response.Unauthorized
-// @Failure 404 {object} response.NotFound
-// @Failure 500 {object} response.InternalServerError
 // @Router /comments [post]
 func (controller *CommentController) CreateComment(ctx *gin.Context) {
 	userId, _ := ctx.Get("id")
@@ -85,8 +81,6 @@ func (controller *CommentController) CreateComment(ctx *gin.Context) {
 // @Produce json
 // @Security ApiKeyAuth
 // @Success 200 {array} repository.CommentCreateResponse
-// @Failure 404 {object} response.NotFound
-// @Failure 500 {object} response.InternalServerError
 // @Router /comments [get]
 func (controller *CommentController) FindAllComment(ctx *gin.Context) {
 	var comments []models.Comment
@@ -124,10 +118,6 @@ func (controller *CommentController) FindAllComment(ctx *gin.Context) {
 // @Param comment body repository.CommentRequest true "Comment data"
 // @Security ApiKeyAuth
 // @Success 200 {object} repository.CommentCreateResponse
-// @Failure 400 {object} response.BadRequest
-// @Failure 401 {object} response.Unauthorized
-// @Failure 404 {object} response.NotFound
-// @Failure 500 {object} response.InternalServerError
 // @Router /comment/{commentId} [put]
 func (controller *CommentController) UpdateComment(ctx *gin.Context) {
 	userId, _ := ctx.Get("id")
@@ -196,9 +186,6 @@ func (controller *CommentController) UpdateComment(ctx *gin.Context) {
 // @Param commentId path string true "Comment ID"
 // @Security ApiKeyAuth
 // @Success 200 {object} gin.H
-// @Failure 401 {object} response.Unauthorized
-// @Failure 404 {object} response.NotFound
-// @Failure 500 {object} response.InternalServerError
 // @Router /comments/{commentId} [delete]
 func (controller *CommentController) DeleteComment(ctx *gin.Context) {
 	userId, _ := ctx.Get("id")
@@ -233,7 +220,7 @@ func (controller *CommentController) DeleteComment(ctx *gin.Context) {
 		return
 	}
 
-	response.WriteJsonResponse(ctx, http.StatusOK, gin.H{
+	ctx.JSON(http.StatusOK, gin.H{
 		"error":   false,
 		"message": "Your comment has been successfully deleted",
 	})
