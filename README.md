@@ -29,3 +29,8 @@ go get -u github.com/alecthomas/template
 ```sh
 go run main.go
 ```
+
+### Running Swagger:
+```
+localhost:8080/swagger/index.html#/
+```
